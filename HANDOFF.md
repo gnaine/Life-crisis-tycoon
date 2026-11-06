@@ -1,5 +1,12 @@
 # Life Crisis Tycoon — handoff for the next session
 
+## LIVE (done 2026-11-06)
+- Game: https://gnaine.github.io/Life-crisis-tycoon/ — repo github.com/gnaine/Life-crisis-tycoon (GitHub Pages, main branch, root, `.nojekyll`). A push redeploys in ~4 min.
+- Supabase project `life-crisis-tycoon` (ref pvihszrcjosdyxmkcklu, eu-west-3, org "gnaine's Org"). Tables: `saves` (RLS own rows), `profiles` (user_id, username unique case-insensitive 3–16 `[A-Za-z0-9_.-]`, public read, own write).
+- Auth: Site URL + redirect `https://gnaine.github.io/Life-crisis-tycoon/**`; email OTP length 6; custom SMTP = Brevo (smtp-relay.brevo.com:587, login c1c5ea001@smtp-brevo.com, sender ena.naine@gmail.com "Life Crisis Tycoon"; key entered by the user). Templates "Magic link" + "Confirm sign up" contain `{{ .Token }}` + link (FR/EN).
+- account.js: account REQUIRED (config.js `REQUIRE_ACCOUNT`), never blocks offline or if a login was ever stored; 2-step panel (email → code, auto-submit at 6 digits); first sign-in asks a public username (`window.MLT_ACCOUNT.username`) — rankings must show usernames, never emails. Apple/Google hidden until set up: add to `PROVIDERS` in config.js.
+- Still to do: end-to-end restore test with a real account; Google sign-in (Google Cloud OAuth client); leaderboard/stats (build from `saves` + `profiles`, expose username + score only, e.g. a SQL view or RPC).
+
 Read this first. The user (French or English; answer in the language she writes in) wants to move the game off the Claude artifact into a standalone installable web app with real accounts and permanent saves.
 
 ## Immediate task (what she asked for)
