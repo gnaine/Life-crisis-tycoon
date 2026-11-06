@@ -3,3 +3,5 @@ export const SUPABASE_URL = 'https://pvihszrcjosdyxmkcklu.supabase.co';
 export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2aWhzenJjam9zZHl4bWtja2x1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NDkzMTcsImV4cCI6MjEwOTUyNTMxN30.48zpIVLSJCS_Xhbg7B9ksDDqWAQB5BW_y9Rj4eJ-YiM';
 // Sign-in buttons shown besides email. Add 'google' and/or 'apple' once that provider is set up in Supabase → Authentication → Providers.
 export const PROVIDERS = [];
+// true: players must sign in before playing. false: the account is optional.
+export const REQUIRE_ACCOUNT = true;

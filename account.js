@@ -4,6 +4,8 @@ import * as CFG from './config.js';
 const { SUPABASE_URL, SUPABASE_ANON_KEY } = CFG;
 // sign-in buttons shown besides email; add 'google' / 'apple' in config.js once each provider is set up in Supabase
 const PROVIDERS = CFG.PROVIDERS || [];
+// players must sign in before playing (rankings need a username); skipped when Supabase can't load (offline)
+const REQUIRED = CFG.REQUIRE_ACCOUNT !== false;
 
 const L = {
   en: { pick: 'Choose your username', pickWhy: 'Shown in rankings instead of your email. 3–16 letters, numbers, _ . -', taken: 'This username is already taken.', badName: 'Use 3–16 letters, numbers, _ . - only.', save: 'Save', sendCode: 'Email me a code', sentTo: 'Code sent to', typeIt: 'Type it here (check spam too).', other: 'Use another email', codeHint: 'Or type the 6-digit code from the email', code: 'Code', verify: 'Sign in', acc: 'Account', title: 'Your account', why: 'Sign in to keep your progress safe online and play on any device.', email: 'Your email', send: 'Email me a sign-in link', sent: 'Check your inbox: tap the link to sign in.', apple: 'Continue with Apple', google: 'Continue with Google', guest: 'Play without an account', signedAs: 'Signed in as', out: 'Sign out', close: 'Close', soon: 'Online accounts are being set up.', err: 'Sign-in failed, please try again.', badEmail: 'Please enter a valid email.' },
@@ -89,22 +91,24 @@ css.textContent = `#accBox{position:fixed;inset:0;z-index:9999;background:rgba(2
 #accBox .card{position:relative}#accBox .xx{position:absolute;top:10px;right:10px;width:34px;height:34px;margin:0;padding:0;border-radius:50%;background:#f1f2f5;color:#555;font-size:18px;line-height:34px}#accBox .lnk{background:none;color:#5B8DEF;font-weight:700;font-size:14px;padding:6px;margin-top:4px}#accBox .msg{font-size:13px;margin-top:8px;color:#2E7D4F;min-height:1em}#accBox .sep{text-align:center;font-size:12px;color:#9aa0ab;margin:10px 0 0}`;
 document.head.appendChild(css);
 
-async function openAccount() {
-  const s = await session(); const box = document.createElement('div'); box.id = 'accBox';
+async function openAccount(opts = {}) {
+  const s = await session(); const required = !!opts.required && !s;
+  if (required && document.querySelector('#accBox[data-req]')) return;
+  const box = document.createElement('div'); box.id = 'accBox'; if (required) box.dataset.req = '1';
   if (!sb) box.innerHTML = `<div class="card"><h2>👤 ${tr('title')}</h2><p>${tr('soon')}</p><button class="gh" data-x>${tr('close')}</button></div>`;
   else if (s) box.innerHTML = `<div class="card"><h2>👤 ${tr('title')}</h2><p>${tr('signedAs')} <b>${(profile ? profile.username : (s.user.email || '')).replace(/</g, '&lt;')}</b></p><button class="gh" data-out>${tr('out')}</button><button class="em" data-x>${tr('close')}</button></div>`;
   else {
     const prov = PROVIDERS.map((p) => p === 'apple' ? `<button class="ap" data-p="apple"> ${tr('apple')}</button>` : `<button class="go" data-p="google">G&nbsp; ${tr('google')}</button>`).join('');
-    box.innerHTML = `<div class="card"><button class="xx" data-x aria-label="${tr('close')}">✕</button><h2>👤 ${tr('title')}</h2><p>${tr('why')}</p>
+    box.innerHTML = `<div class="card">${required ? '' : `<button class="xx" data-x aria-label="${tr('close')}">✕</button>`}<h2>👤 ${tr('title')}</h2><p>${tr('why')}</p>
     <div data-step1>${prov}${prov ? '<div class="sep">— ou / or —</div>' : ''}<input data-email type="email" inputmode="email" autocomplete="email" placeholder="${tr('email')}"><button class="em" data-mail>✉️ ${tr('sendCode')}</button></div>
     <div data-step2 hidden><p style="margin:0">${tr('sentTo')} <b data-to></b><br>${tr('typeIt')}</p><input data-code inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="${tr('code')}"><button class="em" data-verify>${tr('verify')}</button><button class="lnk" data-back>${tr('other')}</button></div>
     <div class="msg" style="color:#C0392B"></div></div>`;
   }
   document.body.appendChild(box);
   const msg = box.querySelector('.msg'), close = () => box.remove();
-  box.addEventListener('click', (e) => { if (e.target === box) close(); });
+  box.addEventListener('click', (e) => { if (e.target === box && !required) close(); });
   box.querySelectorAll('[data-x]').forEach((b) => (b.onclick = close));
-  const out = box.querySelector('[data-out]'); if (out) out.onclick = async () => { await sb.auth.signOut(); close(); };
+  const out = box.querySelector('[data-out]'); if (out) out.onclick = async () => { await sb.auth.signOut(); close(); if (REQUIRED) openAccount({ required: true }); };
   box.querySelectorAll('[data-p]').forEach((b) => (b.onclick = async () => {
     const { error } = await sb.auth.signInWithOAuth({ provider: b.dataset.p, options: { redirectTo: here() } });
     if (error) msg.textContent = tr('err');
@@ -135,5 +139,5 @@ async function paintButton() {
   const b = document.getElementById('bAccount'); if (!b) return; const s = await session();
   b.textContent = s ? '👤 ' + (profile ? profile.username : tr('acc')) + ' ☁️' : '👤 ' + tr('acc');
 }
-const btn = document.getElementById('bAccount'); if (btn) { btn.onclick = openAccount; paintButton(); }
-if (sb) ensureUsername();
+const btn = document.getElementById('bAccount'); if (btn) { btn.onclick = () => openAccount(); paintButton(); }
+if (sb) { ensureUsername(); if (REQUIRED) session().then((s) => { if (!s) openAccount({ required: true }); }); }
