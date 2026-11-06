@@ -140,4 +140,7 @@ async function paintButton() {
   b.textContent = s ? '👤 ' + (profile ? profile.username : tr('acc')) + ' ☁️' : '👤 ' + tr('acc');
 }
 const btn = document.getElementById('bAccount'); if (btn) { btn.onclick = () => openAccount(); paintButton(); }
-if (sb) { ensureUsername(); if (REQUIRED) session().then((s) => { if (!s) openAccount({ required: true }); }); }
+// never lock the game offline: a signed-in player keeps playing in the train even if the token can't refresh
+const hadLogin = () => Object.keys(localStorage).some((k) => k.startsWith('sb-') && k.endsWith('-auth-token'));
+const mustSignIn = async () => REQUIRED && navigator.onLine && !(await session()) && !hadLogin();
+if (sb) { ensureUsername(); mustSignIn().then((m) => { if (m) openAccount({ required: true }); }); addEventListener('online', () => mustSignIn().then((m) => { if (m) openAccount({ required: true }); })); }
