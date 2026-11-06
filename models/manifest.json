@@ -1,0 +1,106 @@
+{
+ "enabled": [
+  "staff",
+  "manager",
+  "visitor"
+ ],
+ "_enabled_help": "Add 'staff', then 'visitor', then 'manager' once their files are in this folder. Missing files fall back to the current procedural characters.",
+ "headBone": "Head",
+ "handBone": "RightHand",
+ "scale": 1,
+ "fade": 0.25,
+ "clips": {
+  "idle": "Idle",
+  "walk": "Walk",
+  "sit": "Sit",
+  "lie": "Lie",
+  "work": "StandWork",
+  "worksit": "SitWork",
+  "phone": "Phone",
+  "sitphone": "SitPhone",
+  "cheer": "Cheer",
+  "clean": "Clean"
+ },
+ "characters": {
+  "host": "staff/host.js",
+  "coach": "staff/coach.js",
+  "therapist": "staff/therapist.js",
+  "guide": "staff/guide.js",
+  "researcher": "staff/researcher.js",
+  "maint": "staff/maint.js",
+  "pharmacist": "staff/pharmacist.js",
+  "mgr_f": "mgr/mgr_f.js",
+  "mgr_h": "mgr/mgr_h.js",
+  "mgr_f2": "mgr/mgr_f2.js",
+  "mgr_h2": "mgr/mgr_h2.js"
+ },
+ "_characters_help": "Full rigged characters per role (Meshy). Each file holds the mesh + clips Idle, Walk, Sit, SitWork, StandWork.",
+ "_modular_option": {
+  "base": "base.glb",
+  "anims": "anims.glb",
+  "outfits": {
+   "host": "outfit_host.glb",
+   "coach": "outfit_coach.glb",
+   "guide": "outfit_guide.glb",
+   "maint": "outfit_maint.glb",
+   "researcher": "outfit_researcher.glb",
+   "pharmacist": "outfit_pharmacist.glb",
+   "therapist": "outfit_therapist.glb",
+   "casual": "outfit_casual.glb",
+   "mgr_hoodie": "outfit_mgr_hoodie.glb",
+   "mgr_suit": "outfit_mgr_suit.glb",
+   "mgr_blazer": "outfit_mgr_blazer.glb",
+   "mgr_street": "outfit_mgr_street.glb",
+   "mgr_dress": "outfit_mgr_dress.glb",
+   "mgr_cardigan": "outfit_mgr_cardigan.glb"
+  },
+  "outfitHidesDefault": [
+   "Top",
+   "Bottom"
+  ],
+  "hair": {
+   "short": "hair_short.glb",
+   "long": "hair_long.glb",
+   "bun": "hair_bun.glb",
+   "curly": "hair_curly.glb",
+   "beanie": "hair_beanie.glb",
+   "hijab": "hair_hijab.glb",
+   "beard": "beard.glb"
+  },
+  "props": {
+   "glasses": "glasses.glb",
+   "phone": "phone.glb"
+  }
+ },
+ "visitors": {
+  "v01": "vis/v01.js",
+  "v02": "vis/v02.js",
+  "v03": "vis/v03.js",
+  "v04": "vis/v04.js",
+  "v05": "vis/v05.js",
+  "v06": "vis/v06.js",
+  "v07": "vis/v07.js",
+  "v08": "vis/v08.js",
+  "v09": "vis/v09.js",
+  "v10": "vis/v10.js",
+  "v11": "vis/v11.js",
+  "v12": "vis/v12.js",
+  "v13": "vis/v13.js",
+  "v14": "vis/v14.js",
+  "v15": "vis/v15.js",
+  "v16": "vis/v16.js",
+  "v17": "vis/v17.js",
+  "v18": "vis/v18.js",
+  "v19": "vis/v19.js",
+  "v20": "vis/v20.js",
+  "v21": "vis/v21.js",
+  "v22": "vis/v22.js",
+  "v23": "vis/v23.js",
+  "v24": "vis/v24.js",
+  "v25": "vis/v25.js",
+  "v26": "vis/v26.js",
+  "v27": "vis/v27.js",
+  "v28": "vis/v28.js",
+  "anims": "vis/anims.js"
+ }
+}
