@@ -1,15 +1,18 @@
 // Player accounts for the standalone app (Supabase): email magic link, Apple, Google — or play without an account.
 // Saves are rows in public.saves (one per local "ahq_" key), protected by row-level security: a player only sees their own.
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
+import * as CFG from './config.js';
+const { SUPABASE_URL, SUPABASE_ANON_KEY } = CFG;
+// sign-in buttons shown besides email; add 'google' / 'apple' in config.js once each provider is set up in Supabase
+const PROVIDERS = CFG.PROVIDERS || [];
 
 const L = {
-  en: { codeHint: 'Or type the 6-digit code from the email', code: 'Code', verify: 'Sign in', acc: 'Account', title: 'Your account', why: 'Sign in to keep your progress safe online and play on any device.', email: 'Your email', send: 'Email me a sign-in link', sent: 'Check your inbox: tap the link to sign in.', apple: 'Continue with Apple', google: 'Continue with Google', guest: 'Play without an account', signedAs: 'Signed in as', out: 'Sign out', close: 'Close', soon: 'Online accounts are being set up.', err: 'Sign-in failed, please try again.', badEmail: 'Please enter a valid email.' },
-  fr: { codeHint: 'Ou tape le code à 6 chiffres reçu par email', code: 'Code', verify: 'Se connecter', acc: 'Compte', title: 'Ton compte', why: 'Connecte-toi pour garder ta progression en sécurité en ligne et jouer sur n’importe quel appareil.', email: 'Ton email', send: 'Recevoir un lien de connexion', sent: 'Regarde tes emails : touche le lien pour te connecter.', apple: 'Continuer avec Apple', google: 'Continuer avec Google', guest: 'Jouer sans compte', signedAs: 'Connecté·e en tant que', out: 'Se déconnecter', close: 'Fermer', soon: 'Les comptes en ligne sont en cours d’installation.', err: 'La connexion a échoué, réessaie.', badEmail: 'Entre un email valide.' },
-  es: { codeHint: 'O escribe el código de 6 cifras del email', code: 'Código', verify: 'Entrar', acc: 'Cuenta', title: 'Tu cuenta', why: 'Inicia sesión para guardar tu progreso en línea y jugar en cualquier dispositivo.', email: 'Tu email', send: 'Enviarme un enlace', sent: 'Revisa tu correo: toca el enlace para entrar.', apple: 'Continuar con Apple', google: 'Continuar con Google', guest: 'Jugar sin cuenta', signedAs: 'Sesión iniciada como', out: 'Cerrar sesión', close: 'Cerrar', soon: 'Las cuentas en línea se están preparando.', err: 'Error al iniciar sesión, inténtalo de nuevo.', badEmail: 'Introduce un email válido.' },
-  pt: { codeHint: 'Ou digite o código de 6 dígitos do email', code: 'Código', verify: 'Entrar', acc: 'Conta', title: 'Sua conta', why: 'Entre para salvar seu progresso online e jogar em qualquer aparelho.', email: 'Seu email', send: 'Receber link de acesso', sent: 'Veja seu email: toque no link para entrar.', apple: 'Continuar com Apple', google: 'Continuar com Google', guest: 'Jogar sem conta', signedAs: 'Conectado como', out: 'Sair', close: 'Fechar', soon: 'As contas online estão sendo configuradas.', err: 'Falha ao entrar, tente de novo.', badEmail: 'Digite um email válido.' },
-  de: { codeHint: 'Oder gib den 6-stelligen Code aus der E-Mail ein', code: 'Code', verify: 'Anmelden', acc: 'Konto', title: 'Dein Konto', why: 'Melde dich an, um deinen Fortschritt online zu sichern und auf jedem Gerät zu spielen.', email: 'Deine E-Mail', send: 'Anmeldelink senden', sent: 'Schau in dein Postfach und tippe auf den Link.', apple: 'Weiter mit Apple', google: 'Weiter mit Google', guest: 'Ohne Konto spielen', signedAs: 'Angemeldet als', out: 'Abmelden', close: 'Schließen', soon: 'Online-Konten werden gerade eingerichtet.', err: 'Anmeldung fehlgeschlagen, bitte erneut versuchen.', badEmail: 'Bitte gib eine gültige E-Mail ein.' },
-  ja: { codeHint: 'またはメールの6桁コードを入力', code: 'コード', verify: 'ログイン', acc: 'アカウント', title: 'アカウント', why: 'ログインすると進行状況がオンラインに保存され、どの端末でも遊べます。', email: 'メールアドレス', send: 'ログインリンクを送る', sent: 'メールのリンクをタップしてログインしてください。', apple: 'Appleで続ける', google: 'Googleで続ける', guest: 'アカウントなしで遊ぶ', signedAs: 'ログイン中：', out: 'ログアウト', close: '閉じる', soon: 'オンラインアカウントは準備中です。', err: 'ログインに失敗しました。もう一度お試しください。', badEmail: '有効なメールアドレスを入力してください。' },
-  ko: { codeHint: '또는 이메일의 6자리 코드를 입력하세요', code: '코드', verify: '로그인', acc: '계정', title: '내 계정', why: '로그인하면 진행 상황이 온라인에 안전하게 저장되고 어느 기기에서나 플레이할 수 있어요.', email: '이메일', send: '로그인 링크 받기', sent: '메일함에서 링크를 눌러 로그인하세요.', apple: 'Apple로 계속', google: 'Google로 계속', guest: '계정 없이 플레이', signedAs: '로그인:', out: '로그아웃', close: '닫기', soon: '온라인 계정을 준비 중이에요.', err: '로그인에 실패했어요. 다시 시도해 주세요.', badEmail: '올바른 이메일을 입력하세요.' },
+  en: { sendCode: 'Email me a code', sentTo: 'Code sent to', typeIt: 'Type it here (check spam too).', other: 'Use another email', codeHint: 'Or type the 6-digit code from the email', code: 'Code', verify: 'Sign in', acc: 'Account', title: 'Your account', why: 'Sign in to keep your progress safe online and play on any device.', email: 'Your email', send: 'Email me a sign-in link', sent: 'Check your inbox: tap the link to sign in.', apple: 'Continue with Apple', google: 'Continue with Google', guest: 'Play without an account', signedAs: 'Signed in as', out: 'Sign out', close: 'Close', soon: 'Online accounts are being set up.', err: 'Sign-in failed, please try again.', badEmail: 'Please enter a valid email.' },
+  fr: { sendCode: 'Recevoir un code par email', sentTo: 'Code envoyé à', typeIt: 'Tape-le ici (regarde aussi dans les spams).', other: 'Changer d’email', codeHint: 'Ou tape le code à 6 chiffres reçu par email', code: 'Code', verify: 'Se connecter', acc: 'Compte', title: 'Ton compte', why: 'Connecte-toi pour garder ta progression en sécurité en ligne et jouer sur n’importe quel appareil.', email: 'Ton email', send: 'Recevoir un lien de connexion', sent: 'Regarde tes emails : touche le lien pour te connecter.', apple: 'Continuer avec Apple', google: 'Continuer avec Google', guest: 'Jouer sans compte', signedAs: 'Connecté·e en tant que', out: 'Se déconnecter', close: 'Fermer', soon: 'Les comptes en ligne sont en cours d’installation.', err: 'La connexion a échoué, réessaie.', badEmail: 'Entre un email valide.' },
+  es: { sendCode: 'Recibir un código por email', sentTo: 'Código enviado a', typeIt: 'Escríbelo aquí (mira también en spam).', other: 'Usar otro email', codeHint: 'O escribe el código de 6 cifras del email', code: 'Código', verify: 'Entrar', acc: 'Cuenta', title: 'Tu cuenta', why: 'Inicia sesión para guardar tu progreso en línea y jugar en cualquier dispositivo.', email: 'Tu email', send: 'Enviarme un enlace', sent: 'Revisa tu correo: toca el enlace para entrar.', apple: 'Continuar con Apple', google: 'Continuar con Google', guest: 'Jugar sin cuenta', signedAs: 'Sesión iniciada como', out: 'Cerrar sesión', close: 'Cerrar', soon: 'Las cuentas en línea se están preparando.', err: 'Error al iniciar sesión, inténtalo de nuevo.', badEmail: 'Introduce un email válido.' },
+  pt: { sendCode: 'Receber um código por email', sentTo: 'Código enviado para', typeIt: 'Digite-o aqui (veja também no spam).', other: 'Usar outro email', codeHint: 'Ou digite o código de 6 dígitos do email', code: 'Código', verify: 'Entrar', acc: 'Conta', title: 'Sua conta', why: 'Entre para salvar seu progresso online e jogar em qualquer aparelho.', email: 'Seu email', send: 'Receber link de acesso', sent: 'Veja seu email: toque no link para entrar.', apple: 'Continuar com Apple', google: 'Continuar com Google', guest: 'Jogar sem conta', signedAs: 'Conectado como', out: 'Sair', close: 'Fechar', soon: 'As contas online estão sendo configuradas.', err: 'Falha ao entrar, tente de novo.', badEmail: 'Digite um email válido.' },
+  de: { sendCode: 'Code per E-Mail erhalten', sentTo: 'Code gesendet an', typeIt: 'Gib ihn hier ein (auch im Spam nachsehen).', other: 'Andere E-Mail verwenden', codeHint: 'Oder gib den 6-stelligen Code aus der E-Mail ein', code: 'Code', verify: 'Anmelden', acc: 'Konto', title: 'Dein Konto', why: 'Melde dich an, um deinen Fortschritt online zu sichern und auf jedem Gerät zu spielen.', email: 'Deine E-Mail', send: 'Anmeldelink senden', sent: 'Schau in dein Postfach und tippe auf den Link.', apple: 'Weiter mit Apple', google: 'Weiter mit Google', guest: 'Ohne Konto spielen', signedAs: 'Angemeldet als', out: 'Abmelden', close: 'Schließen', soon: 'Online-Konten werden gerade eingerichtet.', err: 'Anmeldung fehlgeschlagen, bitte erneut versuchen.', badEmail: 'Bitte gib eine gültige E-Mail ein.' },
+  ja: { sendCode: 'メールでコードを受け取る', sentTo: 'コードを送信しました：', typeIt: 'ここに入力してください（迷惑メールも確認）。', other: '別のメールを使う', codeHint: 'またはメールの6桁コードを入力', code: 'コード', verify: 'ログイン', acc: 'アカウント', title: 'アカウント', why: 'ログインすると進行状況がオンラインに保存され、どの端末でも遊べます。', email: 'メールアドレス', send: 'ログインリンクを送る', sent: 'メールのリンクをタップしてログインしてください。', apple: 'Appleで続ける', google: 'Googleで続ける', guest: 'アカウントなしで遊ぶ', signedAs: 'ログイン中：', out: 'ログアウト', close: '閉じる', soon: 'オンラインアカウントは準備中です。', err: 'ログインに失敗しました。もう一度お試しください。', badEmail: '有効なメールアドレスを入力してください。' },
+  ko: { sendCode: '이메일로 코드 받기', sentTo: '코드를 보냈어요:', typeIt: '여기에 입력하세요 (스팸함도 확인).', other: '다른 이메일 사용', codeHint: '또는 이메일의 6자리 코드를 입력하세요', code: '코드', verify: '로그인', acc: '계정', title: '내 계정', why: '로그인하면 진행 상황이 온라인에 안전하게 저장되고 어느 기기에서나 플레이할 수 있어요.', email: '이메일', send: '로그인 링크 받기', sent: '메일함에서 링크를 눌러 로그인하세요.', apple: 'Apple로 계속', google: 'Google로 계속', guest: '계정 없이 플레이', signedAs: '로그인:', out: '로그아웃', close: '닫기', soon: '온라인 계정을 준비 중이에요.', err: '로그인에 실패했어요. 다시 시도해 주세요.', badEmail: '올바른 이메일을 입력하세요.' },
 };
 const tr = (k) => { const l = (localStorage.getItem('ahq_lang') || navigator.language || 'en').slice(0, 2); return (L[l] || L.en)[k] || L.en[k]; };
 const configured = SUPABASE_URL && !SUPABASE_URL.includes('YOUR_') && SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('YOUR_');
@@ -50,17 +53,20 @@ css.textContent = `#accBox{position:fixed;inset:0;z-index:9999;background:rgba(2
 #accBox button{width:100%;border:0;border-radius:14px;padding:12px;font-size:15px;font-weight:700;margin-top:8px;cursor:pointer;font-family:inherit}
 #accBox .ap{background:#111;color:#fff}#accBox .go{background:#fff;color:#222;border:2px solid #e3e5ea}#accBox .em{background:#5B8DEF;color:#fff}#accBox .gh{background:#f1f2f5;color:#333}
 #accBox input{width:100%;box-sizing:border-box;border:2px solid #e3e5ea;border-radius:14px;padding:11px 12px;font-size:16px;margin-top:10px;font-family:inherit}
-#accBox .msg{font-size:13px;margin-top:8px;color:#2E7D4F;min-height:1em}#accBox .sep{text-align:center;font-size:12px;color:#9aa0ab;margin:10px 0 0}`;
+#accBox .card{position:relative}#accBox .xx{position:absolute;top:10px;right:10px;width:34px;height:34px;margin:0;padding:0;border-radius:50%;background:#f1f2f5;color:#555;font-size:18px;line-height:34px}#accBox .lnk{background:none;color:#5B8DEF;font-weight:700;font-size:14px;padding:6px;margin-top:4px}#accBox .msg{font-size:13px;margin-top:8px;color:#2E7D4F;min-height:1em}#accBox .sep{text-align:center;font-size:12px;color:#9aa0ab;margin:10px 0 0}`;
 document.head.appendChild(css);
 
 async function openAccount() {
   const s = await session(); const box = document.createElement('div'); box.id = 'accBox';
   if (!sb) box.innerHTML = `<div class="card"><h2>👤 ${tr('title')}</h2><p>${tr('soon')}</p><button class="gh" data-x>${tr('close')}</button></div>`;
   else if (s) box.innerHTML = `<div class="card"><h2>👤 ${tr('title')}</h2><p>${tr('signedAs')} <b>${(s.user.email || s.user.user_metadata?.full_name || '').replace(/</g, '&lt;')}</b></p><button class="gh" data-out>${tr('out')}</button><button class="em" data-x>${tr('close')}</button></div>`;
-  else box.innerHTML = `<div class="card"><h2>👤 ${tr('title')}</h2><p>${tr('why')}</p>
-    <button class="ap" data-p="apple"> ${tr('apple')}</button><button class="go" data-p="google">G&nbsp; ${tr('google')}</button>
-    <div class="sep">— ou / or —</div><input type="email" inputmode="email" autocomplete="email" placeholder="${tr('email')}"><button class="em" data-mail>✉️ ${tr('send')}</button><div class="msg"></div>
-    <button class="gh" data-x>${tr('guest')}</button></div>`;
+  else {
+    const prov = PROVIDERS.map((p) => p === 'apple' ? `<button class="ap" data-p="apple"> ${tr('apple')}</button>` : `<button class="go" data-p="google">G&nbsp; ${tr('google')}</button>`).join('');
+    box.innerHTML = `<div class="card"><button class="xx" data-x aria-label="${tr('close')}">✕</button><h2>👤 ${tr('title')}</h2><p>${tr('why')}</p>
+    <div data-step1>${prov}${prov ? '<div class="sep">— ou / or —</div>' : ''}<input data-email type="email" inputmode="email" autocomplete="email" placeholder="${tr('email')}"><button class="em" data-mail>✉️ ${tr('sendCode')}</button></div>
+    <div data-step2 hidden><p style="margin:0">${tr('sentTo')} <b data-to></b><br>${tr('typeIt')}</p><input data-code inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="${tr('code')}"><button class="em" data-verify>${tr('verify')}</button><button class="lnk" data-back>${tr('other')}</button></div>
+    <div class="msg" style="color:#C0392B"></div></div>`;
+  }
   document.body.appendChild(box);
   const msg = box.querySelector('.msg'), close = () => box.remove();
   box.addEventListener('click', (e) => { if (e.target === box) close(); });
@@ -70,21 +76,26 @@ async function openAccount() {
     const { error } = await sb.auth.signInWithOAuth({ provider: b.dataset.p, options: { redirectTo: here() } });
     if (error) msg.textContent = tr('err');
   }));
-  const mail = box.querySelector('[data-mail]'); if (mail) mail.onclick = async () => {
-    const em = box.querySelector('input').value.trim(); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { msg.textContent = tr('badEmail'); return; }
-    mail.disabled = true; const { error } = await sb.auth.signInWithOtp({ email: em, options: { emailRedirectTo: here() } });
-    msg.textContent = error ? tr('err') : tr('sent'); mail.disabled = false;
-    if (!error && !box.querySelector('[data-code]')) {
-      // installed iPhone apps don't share storage with Safari, so the emailed code is the reliable route
-      const w = document.createElement('div'); w.innerHTML = `<p style="margin:10px 0 0">${tr('codeHint')}</p><input data-code inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="${tr('code')}"><button class="em" data-verify>${tr('verify')}</button>`;
-      msg.after(w);
-      w.querySelector('[data-verify]').onclick = async () => {
-        const token = w.querySelector('[data-code]').value.replace(/\D/g, ''); if (token.length < 6) return;
-        const { error: e2 } = await sb.auth.verifyOtp({ email: em, token, type: 'email' });
-        if (e2) msg.textContent = tr('err'); else close();
-      };
-    }
+  const mail = box.querySelector('[data-mail]'); if (!mail) return;
+  const s1 = box.querySelector('[data-step1]'), s2 = box.querySelector('[data-step2]'), emIn = box.querySelector('[data-email]'), codeIn = box.querySelector('[data-code]');
+  let em = '';
+  const send = async () => {
+    em = emIn.value.trim(); msg.textContent = '';
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { msg.textContent = tr('badEmail'); return; }
+    mail.disabled = true; const { error } = await sb.auth.signInWithOtp({ email: em, options: { emailRedirectTo: here() } }); mail.disabled = false;
+    if (error) { msg.textContent = tr('err'); return; }
+    // installed iPhone apps don't share storage with Safari, so the emailed code is the reliable route
+    box.querySelector('[data-to]').textContent = em; s1.hidden = true; s2.hidden = false; codeIn.value = ''; codeIn.focus();
   };
+  const verify = async () => {
+    const token = codeIn.value.replace(/\D/g, ''); if (token.length < 6) return; msg.textContent = '';
+    const { error } = await sb.auth.verifyOtp({ email: em, token, type: 'email' });
+    if (error) msg.textContent = tr('err'); else close();
+  };
+  mail.onclick = send; emIn.onkeydown = (e) => { if (e.key === 'Enter') send(); };
+  box.querySelector('[data-verify]').onclick = verify; codeIn.onkeydown = (e) => { if (e.key === 'Enter') verify(); };
+  codeIn.oninput = () => { const t = codeIn.value.replace(/\D/g, ''); if (t.length === 6) verify(); };
+  box.querySelector('[data-back]').onclick = () => { s2.hidden = true; s1.hidden = false; msg.textContent = ''; emIn.focus(); };
 }
 
 async function paintButton() {
