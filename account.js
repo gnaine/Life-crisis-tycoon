@@ -88,7 +88,7 @@ css.textContent = `#accBox{position:fixed;inset:0;z-index:9999;background:rgba(2
 #accBox button{width:100%;border:0;border-radius:14px;padding:12px;font-size:15px;font-weight:700;margin-top:8px;cursor:pointer;font-family:inherit}
 #accBox .ap{background:#111;color:#fff}#accBox .go{background:#fff;color:#222;border:2px solid #e3e5ea}#accBox .em{background:#5B8DEF;color:#fff}#accBox .gh{background:#f1f2f5;color:#333}
 #accBox input{width:100%;box-sizing:border-box;border:2px solid #e3e5ea;border-radius:14px;padding:11px 12px;font-size:16px;margin-top:10px;font-family:inherit}
-#accBox .card{position:relative}#accBox .xx{position:absolute;top:10px;right:10px;width:34px;height:34px;margin:0;padding:0;border-radius:50%;background:#f1f2f5;color:#555;font-size:18px;line-height:34px}#accBox .lnk{background:none;color:#5B8DEF;font-weight:700;font-size:14px;padding:6px;margin-top:4px}#accBox .msg{font-size:13px;margin-top:8px;color:#2E7D4F;min-height:1em}#accBox .sep{text-align:center;font-size:12px;color:#9aa0ab;margin:10px 0 0}`;
+#accBox .card{position:relative}#accBox .xx{position:absolute;top:10px;right:10px;width:34px;height:34px;margin:0;padding:0;border-radius:50%;background:#f1f2f5;color:#555;font-size:18px;line-height:34px}#accBox .lnk{background:none;color:#5B8DEF;font-weight:700;font-size:14px;padding:6px;margin-top:4px}#accBox .msg:empty{display:none}#accBox .msg{font-size:13px;margin-top:8px;color:#2E7D4F;min-height:1em}#accBox .sep{text-align:center;font-size:12px;color:#9aa0ab;margin:10px 0 0}`;
 document.head.appendChild(css);
 
 async function openAccount(opts = {}) {
