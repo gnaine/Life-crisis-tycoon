@@ -11,7 +11,7 @@ L['fr'] = ('Français', 'Politique de confidentialité', 'Dernière mise à jour
   '<tr><td>Ta progression (sauvegardes du jeu)</td><td>Retrouver ta partie sur n’importe quel appareil, et calculer tes scores dans les classements.</td></tr>'
   '<tr><td>Données techniques (adresse IP, date de connexion)</td><td>Faire fonctionner et sécuriser la connexion. Enregistrées automatiquement par nos prestataires.</td></tr></table>'
   '<p>Base légale : l’exécution du service que tu demandes en créant un compte (article 6.1.b du RGPD). Il n’y a <b>ni publicité, ni pistage, ni revente</b> de données.</p>'),
- ('Ce que les autres joueurs voient', '<p>Dans les classements, uniquement : ton pseudo, ton nombre d’étoiles, ton meilleur score au Défi du jour, et pour chaque ville la valeur de ta clinique, le nombre de clients aidés, l’ambiance et le jour atteint.</p>'),
+ ('Ce que les autres joueurs voient', '<p>Dans les classements, uniquement : ton pseudo, ton nombre d’étoiles et, pour chaque ville la valeur de ta clinique, le nombre de clients aidés, l’ambiance et le jour atteint.</p>'),
  ('Stockage sur ton appareil', '<p>Le jeu enregistre ta partie, ta langue et ta session de connexion dans le stockage local de ton navigateur. C’est indispensable au fonctionnement du jeu : il n’y a aucun cookie publicitaire ou de mesure d’audience.</p>'),
  ('Signal « Do Not Track »', '<p>Le jeu ne suit pas ton activité sur d’autres sites et ne fait aucun pistage publicitaire. Il fonctionne donc de la même façon que ton navigateur envoie ou non le signal « Do Not Track » (ou Global Privacy Control).</p>'),
  ('Nos prestataires', '<ul><li><b>Supabase</b> : comptes et sauvegardes, hébergés dans l’Union européenne (Paris).</li><li><b>Brevo</b> (France) : envoi des e-mails contenant le code de connexion.</li><li><b>GitHub Pages</b> (GitHub, États-Unis) : hébergement du site du jeu.</li><li><b>jsDelivr</b> et <b>Google Fonts</b> : chargement de bibliothèques et de polices d’écriture. Ton adresse IP leur est transmise à cette occasion.</li></ul>'
@@ -32,7 +32,7 @@ L['en'] = ('English', 'Privacy policy', 'Last updated: November 22, 2026', [
   '<tr><td>Your progress (game saves)</td><td>To restore your game on any device, and to compute your ranking scores.</td></tr>'
   '<tr><td>Technical data (IP address, sign-in time)</td><td>To run and secure sign-in. Logged automatically by our service providers.</td></tr></table>'
   '<p>Legal basis: providing the service you ask for when you create an account (GDPR article 6(1)(b)). There is <b>no advertising, no tracking and no selling</b> of data.</p>'),
- ('What other players see', '<p>In the rankings, only: your username, your number of stars, your best Daily challenge score, and for each city your clinic’s value, the number of clients helped, its mood and the day reached.</p>'),
+ ('What other players see', '<p>In the rankings, only: your username, your number of stars and, for each city, your clinic’s value, the number of clients helped, its mood and the day reached.</p>'),
  ('Storage on your device', '<p>The game stores your progress, your language and your sign-in session in your browser’s local storage. This is needed for the game to work: there are no advertising or analytics cookies.</p>'),
  ('“Do Not Track” signals', '<p>The game does not follow your activity across other websites and does no advertising tracking. It therefore works the same way whether or not your browser sends a “Do Not Track” (or Global Privacy Control) signal.</p>'),
  ('Our service providers', '<ul><li><b>Supabase</b>: accounts and saves, hosted in the European Union (Paris).</li><li><b>Brevo</b> (France): sending the emails with your sign-in code.</li><li><b>GitHub Pages</b> (GitHub, United States): hosting the game’s website.</li><li><b>jsDelivr</b> and <b>Google Fonts</b>: loading code libraries and fonts. Your IP address is sent to them when this happens.</li></ul>'
@@ -53,7 +53,7 @@ L['es'] = ('Español', 'Política de privacidad', 'Última actualización: 22 de
   '<tr><td>Tu progreso (partidas guardadas)</td><td>Recuperar tu partida en cualquier dispositivo y calcular tus puntuaciones en las clasificaciones.</td></tr>'
   '<tr><td>Datos técnicos (dirección IP, hora de acceso)</td><td>Hacer funcionar y proteger el acceso. Los registran automáticamente nuestros proveedores.</td></tr></table>'
   '<p>Base jurídica: la prestación del servicio que pides al crear una cuenta (artículo 6.1.b del RGPD). <b>No hay publicidad, ni seguimiento, ni venta</b> de datos.</p>'),
- ('Lo que ven los demás jugadores', '<p>En las clasificaciones, solo: tu nombre de usuario, tu número de estrellas, tu mejor puntuación en el Reto diario y, para cada ciudad, el valor de tu clínica, los clientes ayudados, el ambiente y el día alcanzado.</p>'),
+ ('Lo que ven los demás jugadores', '<p>En las clasificaciones, solo: tu nombre de usuario, tu número de estrellas y, para cada ciudad, el valor de tu clínica, los clientes ayudados, el ambiente y el día alcanzado.</p>'),
  ('Almacenamiento en tu dispositivo', '<p>El juego guarda tu partida, tu idioma y tu sesión en el almacenamiento local del navegador. Es imprescindible para que el juego funcione: no hay cookies publicitarias ni de medición de audiencia.</p>'),
  ('Señal «Do Not Track»', '<p>El juego no sigue tu actividad en otros sitios ni hace seguimiento publicitario. Por eso funciona igual tanto si tu navegador envía la señal «Do Not Track» (o Global Privacy Control) como si no.</p>'),
  ('Nuestros proveedores', '<ul><li><b>Supabase</b>: cuentas y partidas, alojadas en la Unión Europea (París).</li><li><b>Brevo</b> (Francia): envío de los emails con tu código de acceso.</li><li><b>GitHub Pages</b> (GitHub, Estados Unidos): alojamiento del sitio del juego.</li><li><b>jsDelivr</b> y <b>Google Fonts</b>: carga de bibliotecas y tipografías. En ese momento reciben tu dirección IP.</li></ul>'
@@ -74,7 +74,7 @@ L['pt'] = ('Português (BR)', 'Política de privacidade', 'Última atualização
   '<tr><td>Seu progresso (saves do jogo)</td><td>Recuperar seu jogo em qualquer aparelho e calcular suas pontuações nos rankings.</td></tr>'
   '<tr><td>Dados técnicos (endereço IP, horário de acesso)</td><td>Fazer o acesso funcionar com segurança. Registrados automaticamente pelos nossos fornecedores.</td></tr></table>'
   '<p>Base legal: a execução do serviço que você pede ao criar uma conta (artigo 6.1.b do RGPD; art. 7, V da LGPD). <b>Não há publicidade, rastreamento nem venda</b> de dados.</p>'),
- ('O que os outros jogadores veem', '<p>Nos rankings, apenas: seu nome de usuário, seu número de estrelas, sua melhor pontuação no Desafio do dia e, para cada cidade, o valor da sua clínica, os clientes ajudados, o clima e o dia alcançado.</p>'),
+ ('O que os outros jogadores veem', '<p>Nos rankings, apenas: seu nome de usuário, seu número de estrelas e, para cada cidade, o valor da sua clínica, os clientes ajudados, o clima e o dia alcançado.</p>'),
  ('Armazenamento no seu aparelho', '<p>O jogo guarda seu progresso, seu idioma e sua sessão no armazenamento local do navegador. Isso é necessário para o jogo funcionar: não há cookies de publicidade nem de análise.</p>'),
  ('Sinal “Do Not Track”', '<p>O jogo não acompanha sua atividade em outros sites e não faz rastreamento publicitário. Por isso funciona do mesmo jeito, quer seu navegador envie ou não o sinal “Do Not Track” (ou Global Privacy Control).</p>'),
  ('Nossos fornecedores', '<ul><li><b>Supabase</b>: contas e saves, hospedados na União Europeia (Paris).</li><li><b>Brevo</b> (França): envio dos emails com o código de acesso.</li><li><b>GitHub Pages</b> (GitHub, Estados Unidos): hospedagem do site do jogo.</li><li><b>jsDelivr</b> e <b>Google Fonts</b>: carregamento de bibliotecas e fontes. Nesse momento eles recebem seu endereço IP.</li></ul>'
@@ -95,7 +95,7 @@ L['de'] = ('Deutsch', 'Datenschutzerklärung', 'Zuletzt aktualisiert: 22. Novemb
   '<tr><td>Dein Fortschritt (Spielstände)</td><td>Um dein Spiel auf jedem Gerät wiederherzustellen und deine Ranglisten-Ergebnisse zu berechnen.</td></tr>'
   '<tr><td>Technische Daten (IP-Adresse, Anmeldezeit)</td><td>Um die Anmeldung zu betreiben und abzusichern. Werden von unseren Dienstleistern automatisch protokolliert.</td></tr></table>'
   '<p>Rechtsgrundlage: die Erbringung des Dienstes, den du mit dem Anlegen eines Kontos anforderst (Art. 6 Abs. 1 lit. b DSGVO). Es gibt <b>keine Werbung, kein Tracking und keinen Verkauf</b> von Daten.</p>'),
- ('Was andere Spieler sehen', '<p>In den Ranglisten nur: deinen Spielernamen, deine Anzahl Sterne, dein bestes Ergebnis bei der Tagesaufgabe und für jede Stadt den Wert deiner Klinik, die Zahl der Kunden, denen geholfen wurde, die Stimmung und den erreichten Tag.</p>'),
+ ('Was andere Spieler sehen', '<p>In den Ranglisten nur: deinen Spielernamen, deine Anzahl Sterne und für jede Stadt den Wert deiner Klinik, die Zahl der Kunden, denen geholfen wurde, die Stimmung und den erreichten Tag.</p>'),
  ('Speicherung auf deinem Gerät', '<p>Das Spiel speichert deinen Spielstand, deine Sprache und deine Anmeldesitzung im lokalen Speicher deines Browsers. Das ist für das Spiel notwendig: Es gibt keine Werbe- oder Analyse-Cookies.</p>'),
  ('„Do Not Track“-Signale', '<p>Das Spiel verfolgt deine Aktivität auf anderen Websites nicht und betreibt kein Werbe-Tracking. Es funktioniert daher gleich, egal ob dein Browser ein „Do Not Track“- (oder Global-Privacy-Control-)Signal sendet.</p>'),
  ('Unsere Dienstleister', '<ul><li><b>Supabase</b>: Konten und Spielstände, gehostet in der Europäischen Union (Paris).</li><li><b>Brevo</b> (Frankreich): Versand der E-Mails mit deinem Anmeldecode.</li><li><b>GitHub Pages</b> (GitHub, USA): Hosting der Website des Spiels.</li><li><b>jsDelivr</b> und <b>Google Fonts</b>: Laden von Code-Bibliotheken und Schriften. Dabei wird ihnen deine IP-Adresse übermittelt.</li></ul>'
@@ -116,7 +116,7 @@ L['ja'] = ('日本語', 'プライバシーポリシー', '最終更新日：202
   '<tr><td>進行状況（セーブデータ）</td><td>どの端末でもゲームを続けられるように、またランキングのスコアを計算するため。</td></tr>'
   '<tr><td>技術データ（IPアドレス、ログイン日時）</td><td>ログインを動かし、安全に保つため。委託先が自動的に記録します。</td></tr></table>'
   '<p>法的根拠：アカウント作成によってあなたが求めるサービスの提供（GDPR第6条1項(b)）。<b>広告、トラッキング、データの販売は一切ありません。</b></p>'),
- ('ほかのプレイヤーに見えるもの', '<p>ランキングに表示されるのは、ユーザー名、スターの数、デイリーチャレンジのベストスコア、そして都市ごとのクリニックの価値・助けたお客さんの数・雰囲気・到達した日数だけです。</p>'),
+ ('ほかのプレイヤーに見えるもの', '<p>ランキングに表示されるのは、ユーザー名、スターの数、そして都市ごとのクリニックの価値・助けたお客さんの数・雰囲気・到達した日数だけです。</p>'),
  ('端末への保存', '<p>ゲームは、進行状況・言語・ログイン状態をブラウザのローカルストレージに保存します。ゲームの動作に必要なもので、広告や分析のためのクッキーはありません。</p>'),
  ('「Do Not Track」信号', '<p>このゲームはほかのサイトでのあなたの行動を追跡せず、広告のためのトラッキングも行いません。そのため、ブラウザが「Do Not Track」（または Global Privacy Control）信号を送っていてもいなくても、動作は同じです。</p>'),
  ('委託先', '<ul><li><b>Supabase</b>：アカウントとセーブデータ。欧州連合（パリ）で保管。</li><li><b>Brevo</b>（フランス）：ログインコードのメール送信。</li><li><b>GitHub Pages</b>（GitHub、アメリカ）：ゲームサイトのホスティング。</li><li><b>jsDelivr</b> と <b>Google Fonts</b>：プログラムとフォントの読み込み。その際にあなたのIPアドレスが送られます。</li></ul>'
@@ -137,7 +137,7 @@ L['ko'] = ('한국어', '개인정보 처리방침', '최종 업데이트: 2026�
   '<tr><td>진행 상황(게임 저장 데이터)</td><td>어느 기기에서든 게임을 이어 하고, 순위 점수를 계산하기 위해서예요.</td></tr>'
   '<tr><td>기술 정보(IP 주소, 접속 시간)</td><td>로그인을 운영하고 안전하게 지키기 위해서예요. 위탁 업체가 자동으로 기록해요.</td></tr></table>'
   '<p>법적 근거: 계정을 만들 때 요청한 서비스의 제공(GDPR 제6조 1항 (b)). <b>광고, 추적, 데이터 판매는 전혀 없어요.</b></p>'),
- ('다른 플레이어에게 보이는 것', '<p>순위표에는 닉네임, 별 개수, 오늘의 도전 최고 점수, 그리고 도시별 클리닉 가치·도운 손님 수·분위기·도달한 날짜만 표시돼요.</p>'),
+ ('다른 플레이어에게 보이는 것', '<p>순위표에는 닉네임, 별 개수, 그리고 도시별 클리닉 가치·도운 손님 수·분위기·도달한 날짜만 표시돼요.</p>'),
  ('기기 저장', '<p>게임은 진행 상황, 언어, 로그인 상태를 브라우저의 로컬 저장소에 저장해요. 게임 작동에 꼭 필요한 것이며, 광고나 분석용 쿠키는 없어요.</p>'),
  ('“Do Not Track” 신호', '<p>이 게임은 다른 사이트에서의 활동을 추적하지 않고 광고용 추적도 하지 않아요. 그래서 브라우저가 “Do Not Track”(또는 Global Privacy Control) 신호를 보내든 안 보내든 똑같이 작동해요.</p>'),
  ('처리 위탁 업체', '<ul><li><b>Supabase</b>: 계정과 저장 데이터, 유럽연합(파리)에 보관.</li><li><b>Brevo</b>(프랑스): 로그인 코드 이메일 발송.</li><li><b>GitHub Pages</b>(GitHub, 미국): 게임 사이트 호스팅.</li><li><b>jsDelivr</b>와 <b>Google Fonts</b>: 코드 라이브러리와 글꼴 불러오기. 이때 IP 주소가 전달돼요.</li></ul>'

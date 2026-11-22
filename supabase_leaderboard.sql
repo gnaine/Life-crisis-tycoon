@@ -35,34 +35,7 @@ language sql stable security definer set search_path = '' as $$
 $$;
 revoke all on function public.player_stars() from public, anon, authenticated;
 
--- 1) Daily challenge: best score of the day (game key ahq_best_daily<YYYY-MM-DD>, the player's local date).
--- Anti-cheat: the 3-minute shift cannot reach the cap below, and a score must be written by the day after
--- (time zones included) — editing an old day's score later does not count.
-create or replace function public.leaderboard_daily(d date, lim int default 50)
-returns table(rank bigint, username text, score int, stars int, me boolean)
-language sql stable security definer set search_path = '' as $$
-  with sc as (
-    select s.user_id, public.safe_num(public.safe_jsonb(s.v))::int as score, s.updated_at
-    from public.saves s
-    where s.k = 'ahq_best_daily' || to_char(d, 'YYYY-MM-DD')
-  ), ok as (
-    select * from sc
-    where score between 1 and 20000
-      and updated_at < (d + 2)::timestamptz and updated_at > (d - 1)::timestamptz
-  ), r as (
-    select rank() over (order by ok.score desc) as rank, pr.username, ok.score, coalesce(ps.stars, 0) as stars,
-      coalesce(ok.user_id = auth.uid(), false) as me, ok.updated_at
-    from ok join public.profiles pr on pr.user_id = ok.user_id
-    left join public.player_stars() ps on ps.user_id = ok.user_id
-  )
-  select rank, username, score, stars, me from r
-  where rank <= greatest(1, least(coalesce(lim, 50), 100)) or me
-  order by rank, updated_at;
-$$;
-revoke all on function public.leaderboard_daily(date, int) from public;
-grant execute on function public.leaderboard_daily(date, int) to anon, authenticated;
-
--- 2) One board per city, on live numbers from the career save (game key ahq_<city>_v2):
+-- One board per city, on live numbers from the career save (game key ahq_<city>_v2):
 --   metric 'value'  = clinic value: cash + what the rooms cost to build
 --   metric 'helped' = clients helped
 --   metric 'vibes'  = mood (0–100)
@@ -115,5 +88,6 @@ $$;
 revoke all on function public.leaderboard_city(text, text, int) from public;
 grant execute on function public.leaderboard_city(text, text, int) to anon, authenticated;
 
--- The first stars-only board is replaced by the two boards above.
+-- Earlier boards, now removed: stars only, then the daily challenge.
 drop function if exists public.leaderboard(int);
+drop function if exists public.leaderboard_daily(date, int);
