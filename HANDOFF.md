@@ -3,9 +3,11 @@
 ## LIVE (done 2026-11-06)
 - Game: https://gnaine.github.io/Life-crisis-tycoon/ — repo github.com/gnaine/Life-crisis-tycoon (GitHub Pages, main branch, root, `.nojekyll`). A push redeploys in ~4 min.
 - Supabase project `life-crisis-tycoon` (ref pvihszrcjosdyxmkcklu, eu-west-3, org "gnaine's Org"). Tables: `saves` (RLS own rows), `profiles` (user_id, username unique case-insensitive 3–16 `[A-Za-z0-9_.-]`, public read, own write).
-- Auth: Site URL + redirect `https://gnaine.github.io/Life-crisis-tycoon/**`; email OTP length 6; custom SMTP = Brevo (smtp-relay.brevo.com:587, login c1c5ea001@smtp-brevo.com, sender ena.naine@gmail.com "Life Crisis Tycoon"; key entered by the user). Templates "Magic link" + "Confirm sign up" contain `{{ .Token }}` + link (FR/EN).
+- Auth: Site URL + redirect `https://gnaine.github.io/Life-crisis-tycoon/**`; email OTP length 6; custom SMTP = Brevo (smtp-relay.brevo.com:587; login, sender address and key are in the Supabase dashboard, not in this repo). Templates "Magic link" + "Confirm sign up" contain `{{ .Token }}` + link (FR/EN).
 - account.js: account REQUIRED (config.js `REQUIRE_ACCOUNT`), never blocks offline or if a login was ever stored; 2-step panel (email → code, auto-submit at 6 digits); first sign-in asks a public username (`window.MLT_ACCOUNT.username`) — rankings must show usernames, never emails. Apple/Google hidden until set up: add to `PROVIDERS` in config.js.
-- Still to do: end-to-end restore test with a real account; Google sign-in (Google Cloud OAuth client); leaderboard/stats (build from `saves` + `profiles`, expose username + score only, e.g. a SQL view or RPC).
+- Done 2026-11-22: `supabase_leaderboard.sql` (applied) — `leaderboard(lim)` RPC (username + stars 0–3 per known city + cities reached, anon readable) and `delete_my_account()` RPC (authenticated, cascades saves/profiles). account.js: 🏆 ranking (title button `#bRank` + account card), "Delete my account" with confirmation, privacy link + consent line on the sign-in form. `privacy.html` (FR/EN, contact@lifecrisistycoon.com — domain not bought yet).
+- Ranking trusts client saves (a player could edit localStorage to fake stars). Fine for now; server-side checks later if cheating appears.
+- Still to do: end-to-end restore test with a real account; Google sign-in (Google Cloud OAuth client, then add 'google' to PROVIDERS in config.js); buy lifecrisistycoon.com so the contact address works and Brevo can send from it.
 
 Read this first. The user (French or English; answer in the language she writes in) wants to move the game off the Claude artifact into a standalone installable web app with real accounts and permanent saves.
 

@@ -3,7 +3,7 @@
 Static web app (installable on phones) + Supabase for player accounts and saves.
 
 ## Setup
-1. Supabase → SQL editor → run `supabase.sql` (table `saves` + row-level security).
+1. Supabase → SQL editor → run `supabase.sql` (table `saves` + row-level security), then `supabase_leaderboard.sql` (ranking + account deletion).
 2. Supabase → Settings → API → copy the Project URL and anon public key into `config.js`.
 3. Supabase → Authentication → URL configuration: Site URL and Redirect URLs = the address where the app is hosted.
 4. Authentication → Providers: Email is on by default. Google and Apple need their own client IDs.
